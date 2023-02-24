@@ -12,3 +12,23 @@ body {
     display: flex;
     flex-direction: column;    
 }
+.infos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.button {
+    font-size: 1.5em;
+}
+.button-navigate {
+    font-size: 2em;
+}
+.button-biggest {
+    font-size: 3em;
+}
+
