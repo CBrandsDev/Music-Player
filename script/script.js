@@ -3,6 +3,11 @@ const bandName = document.getElementById('band');
 const song = document.getElementById('audio');  
 const cover = document.getElementById('cover');  
 const play = document.getElementById('play');
+const next = document.getElementById('next');
+const previous = document.getElementById('previous');
+
+//variavel para designar se a musica esta tocando ou nn
+let isPlaying = false;
 
 // variaveis das musicas
 const arabella = {
@@ -74,14 +79,10 @@ const whydYouOnlyCallMeWhenYoureHigh = {
 
 
 // array para guardar todas a musicas em uma playlist
-const playlistAM = [arabella,doIWannaKnow,fireside,iWantItAll,kneeSocks,madSounds,no1PartyAnthem,oneForTheRoad,rUMine,snapOutOfIt,whydYouOnlyCallMeWhenYoureHigh];
+const playlist = [arabella, doIWannaKnow, fireside, iWantItAll, kneeSocks, madSounds, no1PartyAnthem, oneForTheRoad, rUMine, snapOutOfIt, whydYouOnlyCallMeWhenYoureHigh];
 let index = 0;
 
-//variavel para designar se a musica esta tocando ou nn
-let isPlaying = false;
 
-songName.innerText = 'Do I Wanna Know';
-bandName.innerText = 'Arctic Monkeys';
 
 // função para dar play na musica e trocar os icones
 function playSong(){
@@ -109,11 +110,18 @@ function playPause(){
     }
 }
 
-function loadSong() {
-    cover.src = 
-    song
-    songName
-    bandName
+function loadSong(){
+    song.src = `assets/songs/${playlist[index].music}.mp3`;
+    songName.innerText = playlist[index].songName;
+    bandName.innerText = playlist[index].artist;
+};
+
+function previousSong() {
+    index -= 1;
 }
 
+
+loadSong();
+
 play.addEventListener('click', playPause);
+previous.addEventListener('click', )
