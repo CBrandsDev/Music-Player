@@ -25,7 +25,7 @@ button {
     justify-content: center;
     margin: 1em 0 3em 0;
 }
-.cover {
+#cover {
     width: 400px;
 }
 .infos {
@@ -35,6 +35,7 @@ button {
     margin: 3em 0 1em 0;
 }
 .infos h2 {
+    max-width: 400px;
     font-size: 2em;
     font-weight: 900;
 }
@@ -44,18 +45,24 @@ button {
     color: rgb(187,187,187);
 }
 .like {
-    color: rgb(187,187,187); 
+    color: rgb(187,187,187);
+    font-size: 1.5em; 
+}
+#progress-container {
+    padding-top: 1em;
+    padding-bottom: 1.5em;
+    cursor: pointer;
 }
 .progress-bar {
     background-color: rgb(187,187,187);
     height: 3px;
     border-radius: 15px;
-    margin-bottom: 2em;
 }
-.current-progress {
+#current-progress {
+    --progress: 0%;
     background-color: white;
     height: inherit;
-    width: 50%;
+    width: var(--progress);
     border-radius: inherit;
 }
 .buttons {
@@ -71,5 +78,8 @@ button {
 }
 .button-biggest {
     font-size: 4em;
+}
+.button-active {
+    color: rgb(28,175,80);
 }
 

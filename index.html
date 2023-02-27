@@ -12,7 +12,7 @@
 <body>
     <main>
     <h1 class="playlist">The Best of AM</h1>
-    <img class="cover"  alt="Album">
+    <img id="cover" alt="Album">
     <audio id="audio"></audio>
     <div class="infos">
         <div class="song-info">
@@ -21,8 +21,10 @@
         </div>
         <button class="like" id="button"><i class="bi bi-heart"></i></button>
     </div>
-    <div class="progress-bar">
-        <div class="current-progress"></div>
+    <div id="progress-container">
+        <div class="progress-bar">
+            <div id="current-progress"></div>
+        </div>
     </div>
     <div class="buttons">
         <button id="shuffle" class="button"><i class="bi bi-shuffle"></i></button>
