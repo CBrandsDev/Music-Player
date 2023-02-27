@@ -20,6 +20,11 @@ button {
     border: none;
     cursor: pointer;
 }
+button:hover {
+    color: rgba(255, 255, 255, 0.658);
+    transition: all .3s; 
+}
+
 .playlist {
     display: flex;
     justify-content: center;
