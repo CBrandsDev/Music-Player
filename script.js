@@ -10,11 +10,15 @@ const shuffle = document.getElementById('shuffle');
 const repeat = document.getElementById('repeat');
 const progressBar = document.getElementById('current-progress');
 const progressContainer = document.getElementById('progress-container');
+const songTime = document.getElementById('song-time');
+const totalTime = document.getElementById('total-time');
 
 // variavel para designar se a musica esta tocando ou nn
 let isPlaying = false;
 // variavel para designar se esta no aleatorio
 let isShuffle = false;
+// variavel para designar se o repetição esta ativado
+let repeatON = false;
 
 // variaveis das musicas
 const fiveOrfive = {
@@ -178,10 +182,11 @@ function nextSong() {
     loadSong();
     playSong();
 }
-// função que atualiza a barra de progresso conforme a musica passa
-function updateProgressBar() {
+// função que atualiza a barra de progresso e o tempo da musica conforme ela passa
+function updateProgress() {
     const barWidth = (song.currentTime/song.duration)*100;
-    progressBar.style.setProperty('--progress', `${barWidth}%`)
+    progressBar.style.setProperty('--progress', `${barWidth}%`);
+    songTime.innerText = toHHMMSS(song.currentTime);
 }
 // função para avançar a musica
 function jumpTo(event) {
@@ -190,7 +195,7 @@ function jumpTo(event) {
     const jumpToTime = (clickPosition/width)*song.duration;
     song.currentTime = jumpToTime;
 }
-
+// função para embaralhar a playlist
 function shuffleArray(preShuffleArray) {
     const size = preShuffleArray.length;
     let currentIndex = size - 1;
@@ -202,7 +207,7 @@ function shuffleArray(preShuffleArray) {
         currentIndex -= 1;
     }
 }
-
+// função para saber se o aleatorio esta ativo
 function shuffleButton() {
     if(isShuffle == false){
         isShuffle = true;
@@ -215,12 +220,49 @@ function shuffleButton() {
         shuffle.classList.remove('button-active');
     }
 }
+// função para saber se a repetição está ativa
+function repeatButton() {
+    if(repeatON == false) {
+        repeatON = true;
+        repeat.classList.add('button-active')
+    }
+    else {
+        repeatON = false;
+        repeat.classList.remove('button-active')
+    }
+}
+// função para repetir ou pular a musica quando acabar
+function nextOrRepeat() {
+    if(repeatON == false) {
+        nextSong();
+    }
+    else {
+        playSong();
+    }
+}
+
+function toHHMMSS(originalNumber) {
+     let hours = Math.floor(originalNumber/3600);
+     let minutes = Math.floor((originalNumber - hours * 3600)/60);
+     let seconds = Math.floor(originalNumber - hours * 3600 - minutes * 60);
+
+     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// função que atualiza o tempo total da musica
+function totalSongTime() {
+    totalTime.innerText = toHHMMSS(song.duration);
+}
+
 
 loadSong();
 
 play.addEventListener('click', playPause);
 previous.addEventListener('click',previousSong);
 next.addEventListener('click',nextSong);
-song.addEventListener('timeupdate', updateProgressBar);
+song.addEventListener('timeupdate', updateProgress);
+song.addEventListener('ended', nextOrRepeat);
+song.addEventListener('loadedmetadata', totalSongTime);
 progressContainer.addEventListener('click', jumpTo);
 shuffle.addEventListener('click', shuffleButton);
+repeat.addEventListener('click', repeatButton);
