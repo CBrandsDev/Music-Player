@@ -6,6 +6,7 @@ const cover = document.getElementById('cover');
 const play = document.getElementById('play');
 const next = document.getElementById('next');
 const previous = document.getElementById('previous');
+const likeButton = document.getElementById('like');
 const shuffle = document.getElementById('shuffle');
 const repeat = document.getElementById('repeat');
 const progressBar = document.getElementById('current-progress');
