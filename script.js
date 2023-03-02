@@ -26,102 +26,118 @@ const fiveOrfive = {
     songName: '505',
     artist: 'Arctic Monkeys',
     album: 'favoriteworstnightmare',
-    music: '505'
+    music: '505',
+    liked: false,
 };
 const arabella = {
     songName: 'Arabella',
     artist: 'Arctic Monkeys',
     album: 'am',
-    music: 'Arabella'
+    music: 'Arabella',
+    liked: false,
 };
 const cryingLightning = {
     songName: 'Crying Lightning',
     artist: 'Arctic Monkeys',
     album: 'humbug',
-    music: 'Crying Lightning'
+    music: 'Crying Lightning',
+    liked: false,
 };
 const cornerstone = {
     songName: 'Cornerstone',
     artist: 'Arctic Monkeys',
     album: 'humbug',
-    music: 'Cornerstone'
+    music: 'Cornerstone',
+    liked: false,
 };
 const doIWannaKnow = {
     songName: 'Do I Wanna Know',
     artist: 'Arctic Monkeys',
     album: 'am',
-    music: 'Do I Wanna Know'
+    music: 'Do I Wanna Know',
+    liked: false,
 };
 const doMeAFavor = {
     songName: 'Do Me A Favour',
     artist: 'Arctic Monkeys',
     album: 'favoriteworstnightmare',
-    music: 'Do Me A Favour'
+    music: 'Do Me A Favour',
+    liked: false,
 };
 const fluorescentAdolescent = {
     songName: 'Fluorescent Adolescent',
     artist: 'Arctic Monkeys',
     album: 'favoriteworstnightmare',
-    music: 'Fluorescent Adolescent'
+    music: 'Fluorescent Adolescent',
+    liked: false,
 };
 const fourOutOfFive = {
     songName: 'Four Out Of Five',
     artist: 'Arctic Monkeys',
     album: 'tranquilitybase',
-    music: 'Four Out Of Five'
+    music: 'Four Out Of Five',
+    liked: false,
 };
 const kneeSocks = {
     songName: 'Knee Socks',
     artist: 'Arctic Monkeys',
     album: 'am',
-    music: 'Knee Socks'
+    music: 'Knee Socks',
+    liked: false,
 };
 const myPropeller = {
     songName: 'My Propeller',
     artist: 'Arctic Monkeys',
     album: 'humbug',
-    music: 'My Propeller'
+    music: 'My Propeller',
+    liked: false,
 };
 const oldYellowBricks = {
     songName: 'Old Yellow Bricks',
     artist: 'Arctic Monkeys',
     album: 'favoriteworstnightmare',
-    music: 'Old Yellow Bricks'
+    music: 'Old Yellow Bricks',
+    liked: false,
 };
 const onlyOnesWhoKnow = {
     songName: 'Only Ones Who Know',
     artist: 'Arctic Monkeys',
     album: 'favoriteworstnightmare',
-    music: 'Only Ones Who Know'
+    music: 'Only Ones Who Know',
+    liked: false,
 };
 const rUMine = {
     songName: 'R U Mine',
     artist: 'Arctic Monkeys',
     album: 'am',
-    music: 'R U Mine'
+    music: 'R U Mine',
+    liked: false,
 };
 const sculpturesOfAnythingGoes = {
     songName: 'Sculptures Of Anything Goes',
     artist: 'Arctic Monkeys',
     album: 'thecar',
-    music: 'Sculptures Of Anything Goes'
+    music: 'Sculptures Of Anything Goes',
+    liked: false,
 };
 const starTreatment = {
     songName: 'Star Treatment',
     artist: 'Arctic Monkeys',
     album: 'tranquilitybase',
-    music: 'Star Treatment'
+    music: 'Star Treatment',
+    liked: false,
 };
 const whydYouOnlyCallMeWhenYoureHigh = {
     songName: "Why'd You Only Call Me When You're High",
     artist: 'Arctic Monkeys',
     album: 'am',
-    music: "Why'd You Only Call Me When You're High"
+    music: "Why'd You Only Call Me When You're High",
+    liked: false,
 };
 
 
 // array para guardar todas a musicas em uma playlist
-const playlist = [fiveOrfive,arabella,cryingLightning,cornerstone,doIWannaKnow,doMeAFavor,fluorescentAdolescent,fourOutOfFive,kneeSocks,myPropeller,oldYellowBricks,onlyOnesWhoKnow,rUMine,sculpturesOfAnythingGoes,starTreatment,whydYouOnlyCallMeWhenYoureHigh];
+const playlist = JSON.parse(localStorage.getItem('playlist')) ?? [fiveOrfive,arabella,cryingLightning,cornerstone,doIWannaKnow,doMeAFavor,fluorescentAdolescent,fourOutOfFive,kneeSocks,myPropeller,oldYellowBricks,onlyOnesWhoKnow,rUMine,sculpturesOfAnythingGoes,starTreatment,whydYouOnlyCallMeWhenYoureHigh];
 let sortedPlaylist = [...playlist];
 let index = 0;
 
@@ -159,6 +175,7 @@ function loadSong(){
     song.src = `assets/songs/${sortedPlaylist[index].music}.mp3`;
     songName.innerText = sortedPlaylist[index].songName;
     bandName.innerText = sortedPlaylist[index].artist;
+    likeButtonRender();
 }
 
 // função para voltar a musica
@@ -255,6 +272,30 @@ function totalSongTime() {
     totalTime.innerText = toHHMMSS(song.duration);
 }
 
+function likeButtonRender() {
+    if (sortedPlaylist[index].liked == true) {
+        likeButton.querySelector('.bi').classList.remove('bi-heart');
+        likeButton.querySelector('.bi').classList.add('bi-heart-fill');
+        likeButton.classList.add('button-active');
+    }
+    else {
+        likeButton.querySelector('.bi').classList.add('bi-heart');
+        likeButton.querySelector('.bi').classList.remove('bi-heart-fill');
+        likeButton.classList.remove('button-active');
+    }
+}
+
+function likeButtonClicked() {
+    if(sortedPlaylist[index].liked == false) {
+        sortedPlaylist[index].liked = true;
+    }
+    else {
+        sortedPlaylist[index].liked = false;
+    }
+    likeButtonRender();
+    localStorage.setItem('playlist', JSON.stringify(playlist));
+}
+
 
 loadSong();
 
@@ -267,3 +308,4 @@ song.addEventListener('loadedmetadata', totalSongTime);
 progressContainer.addEventListener('click', jumpTo);
 shuffle.addEventListener('click', shuffleButton);
 repeat.addEventListener('click', repeatButton);
+likeButton.addEventListener('click', likeButtonClicked);
